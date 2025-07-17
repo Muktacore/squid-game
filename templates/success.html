@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Success - Squid Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+        body.success-bg {
+            background: url("{{ url_for('static', filename='images/success-bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+
+            /* --- KEY CHANGES FOR LAYOUT --- */
+            display: flex; /* Use flexbox for body */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center items vertically in the viewport */
+            align-items: center; /* Center items horizontally */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            gap: 1.5rem; /* Space between the message box and the image */
+            /* --- END KEY CHANGES --- */
+        }
+
+        .success-container {
+            background: rgba(0, 0, 0, 0.7); /* Slightly darker for better contrast */
+            padding: 2.5rem 2rem; /* Increased padding for more space */
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.6); /* More prominent glow */
+            max-width: 550px; /* Increased max-width for bigger box */
+            width: 90%; /* Responsive width */
+            text-align: center;
+            /* Removed margin-top/auto as flexbox handles centering */
+            margin: 0; /* Reset margin as flex container will position it */
+            box-sizing: border-box; /* Include padding in element's total width/height */
+        }
+
+        #welcome-message {
+            font-size: 2.2em; /* Significantly larger welcome message */
+            font-weight: bold;
+            color: crimson;
+            text-shadow: 0 0 15px crimson, 0 0 25px rgba(220, 20, 60, 0.7); /* Stronger glow */
+            margin-bottom: 1.5rem; /* Adjusted space below heading */
+        }
+
+        #role-message {
+            font-size: 1.2em; /* Larger body text */
+            line-height: 1.6;
+            color: #e0e0e0; /* Slightly lighter grey for readability */
+        }
+
+        .role-image {
+            display: block;
+            /* margin: 20px auto 0 auto; Removed as gap on body handles spacing */
+            width: 300px; /* Increased size of the image */
+            height: auto;
+            border-radius: 12px; /* Add some border-radius for styling */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); /* Add a shadow to the image */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 1.8rem 1.2rem; /* Reduce padding on smaller screens */
+                max-width: 95%; /* Allow it to take more width */
+            }
+
+            #welcome-message {
+                font-size: 1.8em; /* Adjust font size for mobile */
+            }
+
+            #role-message {
+                font-size: 1em; /* Adjust font size for mobile */
+            }
+
+            .role-image {
+                width: 250px; /* Smaller image on mobile */
+            }
+        }
+    </style>
+</head>
+
+<body class="success-bg">
+  <div class="success-container">
+    <h2 id="welcome-message">Loading...</h2>
+    <p id="role-message"></p>
+  </div>
+
+  <!-- Role-specific image -->
+  <img id="role-image" class="role-image" src="" alt="Role Icon" style="display: none;" />
+
+  <audio id="success-sound" src="{{ url_for('static', filename='assets/audio/success-chime.mp3') }}" autoplay></audio>
+
+  <!-- Wait for DOM, then run JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const welcomeMessage = document.getElementById("welcome-message");
+      const roleMessage = document.getElementById("role-message");
+      const roleImage = document.getElementById("role-image");
+
+      const role = localStorage.getItem("role");
+      const playerID = localStorage.getItem("playerID");
+      const soldierID = localStorage.getItem("soldierID");
+
+      function getRandomLocation() {
+        const locations = [
+          "Warehouse 17B, Incheon Port",
+          "Bus Stop 4, Mapo Bridge",
+          "Dockside Shed No. 3",
+          "Lot 51, Gyeonggi Industrial Zone",
+          "Underground Lot, Namsan Tunnel 2"
+        ];
+        return locations[Math.floor(Math.random() * locations.length)];
+      }
+
+      if (role === "player" && playerID) {
+        welcomeMessage.textContent = "Well done, you win a chance to change your life.";
+        roleMessage.innerHTML = `
+          Welcome to Squid Game <strong>Player ${playerID}</strong>.<br><br>
+          A pickup van will arrive at your registered address tomorrow at 3:00 AM.<br>
+          Be ready.`;
+        roleImage.src = "{{ url_for('static', filename='images/ticket.png') }}";
+        roleImage.alt = "Ticket";
+        roleImage.style.display = "block";
+      } else if (role === "soldier" && soldierID) {
+        welcomeMessage.textContent = "Congratulations!";
+        roleMessage.innerHTML = `
+          You are now appointed as <strong>Soldier ${soldierID}</strong>.<br><br>
+          Your uniform will arrive tomorrow at your registered address by 1:00 AM.<br>
+          Reach <strong>${getRandomLocation()}</strong> by <strong>3:00 AM</strong>.`;
+        roleImage.src = "{{ url_for('static', filename='images/mask.png') }}";
+        roleImage.alt = "Mask";
+        roleImage.style.display = "block";
+      } else {
+        welcomeMessage.textContent = "Well played!";
+        roleMessage.textContent = "Thank you for playing Squid Game.";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Squid Game Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="home-bg">
+  <div class="terms-link">
+    <a href="#" style="color: #aaa;">Terms & Conditions</a>
+  </div>
+  
+  <div class="home-container">
+    <h1>Welcome to Squid Game</h1>
+    <p>Enter the game... if you dare.</p>
+    <div class="button-group">
+      <button onclick="window.location.href='/login'">Login</button>
+      <button onclick="window.location.href='/register'">Sign Up</button>
+    </div>
+  </div>
+</body>
+</html>

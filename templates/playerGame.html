@@ -1,0 +1,24 @@
+<!-- templates/player.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Player Game - Squid Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="player-game-bg">
+  <div class="game-container">
+    <h2>Stone Paper Scissors</h2>
+    <div class="choices">
+      <button onclick="play('rock')">🪨 Rock</button>
+      <button onclick="play('paper')">📄 Paper</button>
+      <button onclick="play('scissors')">✂️ Scissors</button>
+    </div>
+    <div id="result"></div>
+  </div>
+
+  <audio id="bg-music" src="{{ url_for('static', filename='assets/audio/bg-music.mp3') }}" autoplay loop></audio>
+  <script src="{{ url_for('static', filename='js/playerGame.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soldier Game - Squid Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="soldier-game-bg">
+  <div class="game-container">
+    <h2>Target Practice</h2>
+    <p>Click the targets as fast as you can!</p>
+    <div id="game-area"></div>
+    <div id="score-board">Score: <span id="score">0</span></div>
+  </div>
+
+  <audio id="bg-music" src="{{ url_for('static', filename='assets/audio/bg-music.mp3') }}" autoplay loop></audio>
+  <script src="{{ url_for('static', filename='js/soldierGame.js') }}"></script>
+</body>
+</html>
